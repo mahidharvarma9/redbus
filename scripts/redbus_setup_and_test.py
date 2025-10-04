@@ -544,15 +544,17 @@ class RedBusAutoSetup:
         self.log("STEP 3.6: Running JUnit Test Suite with Coverage", "STEP", False)
         print("-" * 50)
         self.log("Executing Java unit tests with JaCoCo coverage...", "INFO")
+        self.log("Showing live test execution output...", "INFO")
+        print()
         
         try:
-            # Run Maven tests with coverage
+            # Run Maven tests with coverage - with live output for visibility
             success, output = self.run_command(
                 "mvn clean test jacoco:report",
                 timeout=600,
-                show_output=False,
+                show_output=True,
                 show_command=True,
-                live_output=False
+                live_output=True  # Show tests as they run
             )
             
             if success:
