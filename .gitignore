@@ -1,0 +1,65 @@
+# Temporary and old files
+tmp/
+target/
+*.class
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Docker volumes
+.docker/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Node.js (if needed)
+node_modules/
+dist/
+.cache/
+
+# Environment variables
+.env
+.env.local
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Elasticsearch data
+data/

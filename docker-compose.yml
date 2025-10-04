@@ -1,0 +1,79 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: redbus-postgres
+    environment:
+      POSTGRES_DB: redbus
+      POSTGRES_USER: redbus
+      POSTGRES_PASSWORD: redbus123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redbus -d redbus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - redbus-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: redbus-redis
+    ports:
+      - "16379:6379"
+    networks:
+      - redbus-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: redbus-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - redbus-network
+
+  app:
+    build: .
+    container_name: redbus-app
+    ports:
+      - "9090:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/redbus
+      SPRING_DATASOURCE_USERNAME: redbus
+      SPRING_DATASOURCE_PASSWORD: redbus123
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
+    depends_on:
+      postgres:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_started
+      redis:
+        condition: service_started
+    restart: on-failure
+    networks:
+      - redbus-network
+
+volumes:
+  postgres_data:
+  elasticsearch_data:
+
+networks:
+  redbus-network:
+    driver: bridge

@@ -1,0 +1,29 @@
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:postgresql://postgres:5432/redbus
+    username: redbus
+    password: redbus123
+  
+  redis:
+    host: redis
+    port: 6379
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+  
+  elasticsearch:
+    uris: http://elasticsearch:9200
+    connection-timeout: 60s
+    socket-timeout: 60s
+    read-timeout: 60s
+
+logging:
+  level:
+    com.redbus: INFO
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
