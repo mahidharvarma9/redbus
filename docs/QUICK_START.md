@@ -42,53 +42,116 @@ You should see something like "Python 3.9.5"
 
 ## Step 4: Run the Setup Script
 
+**⚠️ IMPORTANT**: You must run the script from the **project root directory** (not from inside the scripts folder).
+
 ### Windows Users:
 
-1. Open File Explorer
-2. Navigate to the RedBus folder → `scripts` folder
-3. Double-click `python redbus_setup_and_test.py`
-4. Press Enter when prompted
-5. Wait 2-5 minutes
+1. Open Command Prompt (Windows Key + R, type `cmd`, press Enter)
+2. Navigate to the RedBus project root folder:
+```cmd
+cd C:\RedBus
+```
+3. Run the script:
+```cmd
+python scripts\redbus_setup_and_test.py
+```
+4. Watch the magic happen! ✨
 
 ### Mac/Linux Users:
 
 1. Open Terminal
-2. Navigate to project:
+2. Navigate to the RedBus project root:
 ```bash
-cd /path/to/RedBus/scripts
+cd /path/to/RedBus
 ```
-3. Make script executable:
+3. Run the script:
 ```bash
-chmod +x python3 redbus_setup_and_test.py
+python3 scripts/redbus_setup_and_test.py
 ```
-4. Run it:
-```bash
-./python3 redbus_setup_and_test.py
-```
-5. Press Enter when prompted
-6. Wait 2-5 minutes
+4. Watch the magic happen! ✨
+
+### ⏱️ How Long Will It Take?
+- **First time**: 10-15 minutes (downloads Docker images, builds app)
+- **Already ran once**: 3-5 minutes (uses cached data)
+
+### 📊 What Will You See?
+The script shows you **everything** in real-time:
+- ✅ Docker setup progress (with live build logs)
+- ✅ 66 JUnit unit tests running (shows each test)
+- ✅ 27 end-to-end tests with full API requests/responses
+- ✅ Code coverage report (shows percentages)
+- ✅ System health checks
+- ✅ Final summary with success rate
 
 ---
 
 ## Step 5: Verify It's Working
 
-The script will automatically:
-- ✅ Start database
-- ✅ Start cache
-- ✅ Start search engine
-- ✅ Start application
-- ✅ Run 27 automated tests
+The script runs automatically and shows you **detailed test results**:
 
-At the end, you should see:
+### Phase 1: Setup (5-10 min first time)
 ```
-========================================
-Tests Passed: 27
+[SETUP] Building and starting all services...
+Live build output...
+[SUCCESS] All services started successfully!
+```
+
+### Phase 2: JUnit Tests (1-2 min)
+```
+[INFO] Tests run: 66, Failures: 0, Errors: 0, Skipped: 0
+[SUCCESS] Code Coverage - Instructions: 37%, Branches: 100%
+```
+
+### Phase 3: End-to-End Tests (30-60 sec)
+You'll see detailed output for each of the 27 tests including:
+- **Request**: Full JSON request body
+- **Response**: Complete API response with data
+- **Result**: ✅ PASS or ❌ FAIL
+
+Example test output:
+```
+[TEST] Test 1: Admin User Registration
+[INFO] API Request: POST /auth/register
+[INFO] Request data: {
+  "username": "admin_test_123",
+  "email": "admin@test.com",
+  ...
+}
+[INFO] Response: 200 OK
+[INFO] Response data: {
+  "token": "eyJhbGc...",
+  "id": 87,
+  "role": "ADMIN"
+}
+[SUCCESS] Admin user created successfully (ID: 87)
+```
+
+### Final Summary
+```
+================================================================================
+REDBUS APPLICATION TEST RESULTS
+================================================================================
+JUNIT TEST COVERAGE:
+  Instruction Coverage: 37%
+  Branch Coverage: 100%
+
+END-TO-END TEST RESULTS:
+Total Tests Run: 27
+Tests Passed: 27 ✅
 Tests Failed: 0
 Success Rate: 100.0%
-========================================
+
+SYSTEM STATUS:
+[RUNNING] PostgreSQL Database  OK
+[RUNNING] Redis Cache          OK
+[RUNNING] Elasticsearch        YELLOW
+[RUNNING] RedBus Application   OK
+
+Total execution time: 0:04:52
+================================================================================
 ```
 
-🎉 **Success! Your application is now running!**
+🎉 **Success! Your application is now running with all tests passed!**
 
 ---
 

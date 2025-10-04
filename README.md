@@ -10,28 +10,33 @@ A comprehensive, production-ready bus ticket booking system built with Spring Bo
 
 ### Run the Application
 
+**⚠️ IMPORTANT**: Run the script from the **project root directory** (where `docker-compose.yml` is located).
+
 **Windows:**
 ```bash
-cd scripts
-python redbus_setup_and_test.py
+cd C:\path\to\redbus
+python scripts\redbus_setup_and_test.py
 ```
 
 **Mac/Linux:**
 ```bash
-cd scripts
-python3 redbus_setup_and_test.py
+cd /path/to/redbus
+python3 scripts/redbus_setup_and_test.py
 ```
 
 The script will automatically:
 1. ✅ Check system requirements
 2. ✅ Build and start all services (PostgreSQL, Redis, Elasticsearch, Application)
 3. ✅ Seed initial test data (operators, routes, buses, schedules)
-4. ✅ Run JUnit tests with coverage analysis
-5. ✅ Run comprehensive end-to-end tests (27 tests)
-6. ✅ Display detailed test results with coverage metrics
+4. ✅ Run **66 JUnit unit tests** with coverage analysis
+5. ✅ Run **27 comprehensive end-to-end tests** with full API request/response output
+6. ✅ Display detailed test results with coverage metrics and system status
 
-**Wait time:** 2-5 minutes (first run may take longer)
-**Note:** If services are already running, it skips setup and goes directly to testing
+**Execution Time:**
+- **First run**: 10-15 minutes (downloads Docker images, builds application)
+- **Subsequent runs**: 3-5 minutes (uses cached data, skips setup if services running)
+
+**Test Output:** The script shows detailed output for all tests including full JSON request/response bodies, making it easy to understand what's being tested and verify the results.
 
 ---
 
@@ -565,10 +570,14 @@ See `docs/API.md` for complete API documentation.
 
 ### Running All Tests
 
+**⚠️ Run from project root directory:**
+
 ```bash
-cd scripts
-python redbus_setup_and_test.py    # Windows
-python3 redbus_setup_and_test.py   # Mac/Linux
+# Windows
+python scripts\redbus_setup_and_test.py
+
+# Mac/Linux
+python3 scripts/redbus_setup_and_test.py
 ```
 
 ### Test Coverage
@@ -597,18 +606,41 @@ python3 redbus_setup_and_test.py   # Mac/Linux
 
 ### Test Results
 
-Example output:
+The script provides **detailed output for each test** including:
+- Full API request bodies (JSON format)
+- Complete API responses with status codes
+- Test execution details and timing
+- Code coverage percentages
+
+Example final summary:
 ```
+================================================================================
+REDBUS APPLICATION TEST RESULTS
+================================================================================
 JUNIT TEST COVERAGE:
-  Instruction Coverage: 78%
-  Branch Coverage: 65%
+  Instruction Coverage: 37%
+  Branch Coverage: 100%
   Report: target/site/jacoco/index.html
 
 END-TO-END TEST RESULTS:
 Total Tests Run: 27
-Tests Passed: 27
+Tests Passed: 27 ✅
 Tests Failed: 0
 Success Rate: 100.0%
+
+SYSTEM STATUS:
+[RUNNING] PostgreSQL Database  OK
+[RUNNING] Redis Cache          OK
+[RUNNING] Elasticsearch        YELLOW
+[RUNNING] RedBus Application   OK
+
+EXCELLENT! RedBus application is fully functional!
+* All core features are working correctly
+* Authentication system operational
+* Business logic functioning properly
+
+Total execution time: 0:04:52
+================================================================================
 
 INITIAL TEST DATA:
   Sample data seeded for demonstration
@@ -771,9 +803,9 @@ lsof -ti:9090 | xargs kill -9
 ```bash
 docker-compose down
 docker-compose up -d
-# Wait 2 minutes
-cd tests
-python redbus_setup_and_test.py
+# Wait 2 minutes, then from project root:
+python scripts/redbus_setup_and_test.py    # Windows
+python3 scripts/redbus_setup_and_test.py   # Mac/Linux
 ```
 
 ### Database migration errors

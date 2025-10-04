@@ -14,18 +14,18 @@ Make sure you have these installed:
 
 ### One-Command Setup & Test
 
-Navigate to the scripts folder and run the setup script:
+**⚠️ IMPORTANT**: Run the script from the **project root directory** (where `docker-compose.yml` is located).
 
 **Windows:**
 ```bash
-cd scripts
-python redbus_setup_and_test.py
+cd C:\path\to\redbus
+python scripts\redbus_setup_and_test.py
 ```
 
 **Mac/Linux:**
 ```bash
-cd scripts
-python3 redbus_setup_and_test.py
+cd /path/to/redbus
+python3 scripts/redbus_setup_and_test.py
 ```
 
 > **Note**: The script is cross-platform and works on Windows, Mac, and Linux without any modifications!
@@ -34,39 +34,61 @@ python3 redbus_setup_and_test.py
 
 The script intelligently handles everything:
 
-**If services are NOT running (First Time):**
-1. ✅ Checks if Docker is running
-2. ✅ Builds all Docker images with live output
-3. ✅ Starts all services (PostgreSQL, Redis, Elasticsearch, App)
-4. ✅ Waits for services to be healthy (~2 minutes)
-5. ✅ Seeds initial test data
-6. ✅ Runs JUnit tests with coverage report
-7. ✅ Runs 27 comprehensive end-to-end tests
-8. ✅ Displays detailed results
+**If services are NOT running (First Time - 10-15 minutes):**
+1. ✅ Checks if Docker is running (~5-10 sec)
+2. ✅ Builds all Docker images with **live build output** (~5-10 min)
+3. ✅ Starts all services (PostgreSQL, Redis, Elasticsearch, App) (~1 min)
+4. ✅ Waits for services to be healthy (~1-2 min)
+5. ✅ Seeds initial test data (~15-30 sec)
+6. ✅ Runs **66 JUnit unit tests** with coverage report (~1-2 min)
+7. ✅ Runs **27 comprehensive E2E tests** with full API request/response output (~30-60 sec)
+8. ✅ Displays detailed results with coverage percentages (~5-10 sec)
 
-**If services ARE already running (Subsequent Runs):**
-1. ✅ Detects healthy services
-2. ✅ Skips Docker setup (saves time!)
-3. ✅ Runs 27 comprehensive end-to-end tests directly
-4. ✅ Displays results (~15 seconds)
+**If services ARE already running (Subsequent Runs - 3-5 minutes):**
+1. ✅ Detects healthy services (~5 sec)
+2. ✅ Skips Docker setup (saves 8-10 minutes!)
+3. ✅ Runs 66 JUnit tests (~1-2 min)
+4. ✅ Runs 27 E2E tests with detailed output (~30-60 sec)
+5. ✅ Displays results (~5 sec)
 
-**Expected Output:**
+**Expected Output (includes detailed test responses):**
+
+You'll see detailed output for ALL tests including:
+- **Full API request bodies** (JSON)
+- **Complete API responses** with status codes
+- **Test execution details** for each of 27 E2E tests
+- **JUnit test results** for all 66 unit tests
+
+Final summary:
 ```
 ================================================================================
 REDBUS APPLICATION TEST RESULTS
 ================================================================================
+JUNIT TEST COVERAGE:
+  Instruction Coverage: 37%
+  Branch Coverage: 100%
+  Report: target/site/jacoco/index.html
+
+END-TO-END TEST RESULTS:
 Total Tests Run: 27
-Tests Passed: 27
+Tests Passed: 27 ✅
 Tests Failed: 0
 Success Rate: 100.0%
 
 SYSTEM STATUS:
 [RUNNING] PostgreSQL Database  OK
 [RUNNING] Redis Cache          OK
-[RUNNING] RedBus Application   OK
 [RUNNING] Elasticsearch        YELLOW
+[RUNNING] RedBus Application   OK
 
 EXCELLENT! RedBus application is fully functional!
+* All core features are working correctly
+* Authentication system operational
+* Business logic functioning properly
+* Database operations successful
+* Search functionality active
+
+Total execution time: 0:04:52
 ================================================================================
 ```
 
@@ -91,8 +113,8 @@ Choose based on your role:
 
 3. **Run tests:**
    ```bash
-   cd scripts
-   python redbus_setup_and_test.py
+   # From project root
+   python scripts/redbus_setup_and_test.py
    ```
 
 ### 👨‍🔬 **For QA/Testers**

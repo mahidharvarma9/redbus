@@ -176,7 +176,11 @@ scripts/
 ### Script Categories
 
 1. **Quick Start** (⭐ Recommended for new users)
-   - `python redbus_setup_and_test.py/sh` - Complete automated setup + test
+   - `python scripts/redbus_setup_and_test.py` - Complete automated setup + test
+   - **Must run from project root directory** (where docker-compose.yml is)
+   - Runs 66 JUnit tests + 27 E2E tests with full output
+   - Shows detailed request/response for all API calls
+   - Takes 10-15 min (first time) or 3-5 min (subsequent runs)
 
 2. **Setup** (For manual control)
    - Various setup scripts for different scenarios
